@@ -1,0 +1,19 @@
+# WordPress core (downloaded into html/)
+html/*
+!html/.gitkeep
+
+# External classroom repos (own git histories)
+fsu24d-social-shopping-plugin-dantvi/
+fsu24d-social-shopping-tema-dantvi/
+
+# Local env & editor noise
+.env
+.DS_Store
+.vscode/
+.idea/
+
+# Common dependencies & dumps
+node_modules/
+vendor/
+*.sql
+*.sql.gz

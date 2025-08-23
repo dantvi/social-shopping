@@ -26,9 +26,8 @@ services:
       - "8084:80"
     volumes:
       - ./html:/var/www/html
-      # Bind-mount your classroom repos after bootstrap:
-      # - ./fsu24d-social-shopping-plugin-dantvi:/var/www/html/wp-content/plugins/fsu24d-social-shopping-plugin-dantvi
-      # - ./fsu24d-social-shopping-tema-dantvi:/var/www/html/wp-content/themes/fsu24d-social-shopping-tema-dantvi
+      - ./fsu24d-social-shopping-plugin-dantvi:/var/www/html/wp-content/plugins/fsu24d-social-shopping-plugin-dantvi
+      - ./fsu24d-social-shopping-tema-dantvi:/var/www/html/wp-content/themes/fsu24d-social-shopping-tema-dantvi
     restart: no
 
   phpmyadmin:
@@ -55,9 +54,8 @@ services:
       WORDPRESS_DB_NAME: ${DB_NAME:-fsu24d-ecom}
     volumes:
       - ./html:/var/www/html
-      # Will mount theme/plugin after bootstrap:
-      # - ./fsu24d-social-shopping-plugin-dantvi:/var/www/html/wp-content/plugins/fsu24d-social-shopping-plugin-dantvi
-      # - ./fsu24d-social-shopping-tema-dantvi:/var/www/html/wp-content/themes/fsu24d-social-shopping-tema-dantvi
+      - ./fsu24d-social-shopping-plugin-dantvi:/var/www/html/wp-content/plugins/fsu24d-social-shopping-plugin-dantvi
+      - ./fsu24d-social-shopping-tema-dantvi:/var/www/html/wp-content/themes/fsu24d-social-shopping-tema-dantvi
     entrypoint: ["bash","-lc"]
     command: ["wp --info"]
 

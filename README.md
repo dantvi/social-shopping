@@ -1,1 +1,60 @@
-# Social shopping
+# Social Shopping
+
+## Requirements
+- Docker Desktop
+- Git
+- Windows users: run commands in **Git Bash** (or WSL)
+
+## 1) Clone & enter
+```bash
+git clone https://github.com/dantvi/social-shopping.git
+cd social-shopping
+```
+
+## 2) Environment
+```bash
+# create .env if missing and pin project name
+cp -n .env.example .env
+grep -q '^COMPOSE_PROJECT_NAME=' .env || echo 'COMPOSE_PROJECT_NAME=social-shopping' >> .env
+```
+
+## 3) (Optional) Classroom repos
+```bash
+bash scripts/bootstrap.sh
+```
+
+## 4) Start Docker
+```bash
+docker compose up -d --build
+```
+
+## 5) Install WordPress (one command)
+```bash
+docker compose run --rm wpcli bash -lc '
+  [ -d wp-admin ] || wp core download --path=/var/www/html --skip-content;
+  wp config create --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --dbhost="$WORDPRESS_DB_HOST" --skip-check --force;
+  wp core install --url="http://localhost:8084" --title="FSU24D Social Shopping" --admin_user="daniel" --admin_password="notSecureChangeMe" --admin_email="you@example.com" --skip-email;
+  wp plugin install woocommerce --activate;
+'
+```
+
+## Open
+- Site: http://localhost:8084
+- Admin: http://localhost:8084/wp-admin (user: daniel / pass: notSecureChangeMe)
+- phpMyAdmin: http://localhost:8085 (user: root / pass: notSecureChangeMe)
+
+## Troubleshooting
+
+### Port in use (8084/8085):
+```bash
+docker compose down
+docker compose up -d --build
+```
+
+### Pretty permalinks 404: 
+Admin → Settings → Permalinks → choose Post name → Save.
+
+### Stop everything:
+```bash
+docker compose down -v
+```

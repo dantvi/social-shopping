@@ -1,0 +1,63 @@
+services:
+  db:
+    image: mariadb:10.6
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-notSecureChangeMe}
+      MYSQL_DATABASE: ${DB_NAME:-fsu24d-ecom}
+    volumes:
+      - db:/var/lib/mysql
+    restart: no
+
+  site:
+    depends_on:
+      - db
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    image: php-local:local
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${DB_ROOT_PASSWORD:-notSecureChangeMe}
+      DB_NAME: ${DB_NAME:-fsu24d-ecom}
+    ports:
+      - "8084:80"
+    volumes:
+      - ./html:/var/www/html
+      - ./fsu24d-social-shopping-plugin-dantvi:/var/www/html/wp-content/plugins/fsu24d-social-shopping-plugin-dantvi
+      - ./fsu24d-social-shopping-tema-dantvi:/var/www/html/wp-content/themes/fsu24d-social-shopping-tema-dantvi
+    restart: no
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin:5
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD:-notSecureChangeMe}
+    ports:
+      - "8085:80"
+    restart: no
+
+  wpcli:
+    image: wordpress:cli-php8.2
+    depends_on:
+      - site
+    working_dir: /var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ${DB_ROOT_PASSWORD:-notSecureChangeMe}
+      WORDPRESS_DB_NAME: ${DB_NAME:-fsu24d-ecom}
+    volumes:
+      - ./html:/var/www/html
+      - ./fsu24d-social-shopping-plugin-dantvi:/var/www/html/wp-content/plugins/fsu24d-social-shopping-plugin-dantvi
+      - ./fsu24d-social-shopping-tema-dantvi:/var/www/html/wp-content/themes/fsu24d-social-shopping-tema-dantvi
+    entrypoint: ["bash","-lc"]
+    command: ["wp --info"]
+
+volumes:
+  db:

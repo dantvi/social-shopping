@@ -38,6 +38,33 @@ docker compose run --rm wpcli bash -lc '
 '
 ```
 
+## 6) Activate theme & plugin
+```bash
+docker compose run --rm wpcli bash -lc "
+  wp theme activate fsu24d-social-shopping-tema-dantvi;
+  wp plugin activate fsu24d-social-shopping-plugin-dantvi;
+  wp rewrite flush --hard
+"
+```
+
+## 7) Create the frontend page for collections
+```bash
+docker compose run --rm wpcli bash -lc "
+  wp post create --post_type=page --post_title='Create Collection' \
+    --post_status=publish --post_content='[ss_create_collection]'
+"
+```
+
+## 8) Add a few products
+
+Use WooCommerce → Products → Add New (need at least two products to create a collection).
+
+## Test
+
+Visit `/create-collection` to submit a collection.
+
+Visit `/collections` to see the archive.
+
 ## Open
 - Site: http://localhost:8084
 - Admin: http://localhost:8084/wp-admin (user: daniel / pass: notSecureChangeMe)
@@ -58,3 +85,7 @@ Admin → Settings → Permalinks → choose Post name → Save.
 ```bash
 docker compose down -v
 ```
+
+## Documentation
+
+See `wp-content/plugins/fsu24d-social-shopping-plugin-dantvi/README.md` for feature details (CPT, taxonomy, admin UI, shortcode, i18n).

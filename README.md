@@ -61,9 +61,16 @@ Use WooCommerce → Products → Add New (need at least two products to create a
 
 ## Test
 
-Visit `/create-collection` to submit a collection.
+Visit `/create-collection` to submit a collection (need ≥ 2 products).
 
 Visit `/collections` to see the archive.
+Try filters/sort/search:
+
+- `?ccat=demo` (category filter by slug)
+- `?sort=alpha` (A–Z) / `?sort=newest` (default)
+- `?s=kit` (search in titles)
+
+Open any single collection and click `Add all to cart` → you should be redirected to the cart with all simple, purchasable, in-stock products added. Unavailable/other types are skipped with a notice.
 
 ## Open
 - Site: http://localhost:8084
@@ -81,6 +88,11 @@ docker compose up -d --build
 ### Pretty permalinks 404: 
 Admin → Settings → Permalinks → choose Post name → Save.
 
+### Parent theme missing:
+```bash
+docker compose run --rm wpcli bash -lc "wp theme install twentytwentyfive"
+```
+
 ### Stop everything:
 ```bash
 docker compose down -v
@@ -88,4 +100,8 @@ docker compose down -v
 
 ## Documentation
 
-See `wp-content/plugins/fsu24d-social-shopping-plugin-dantvi/README.md` for feature details (CPT, taxonomy, admin UI, shortcode, i18n).
+**Plugin:** `wp-content/plugins/fsu24d-social-shopping-plugin-dantvi/README.md`  
+Covers CPT/taxonomy, admin UI, shortcode, archive URL params (ccat, sort, s), and "Add all to cart" (behavior + hooks).
+
+**Theme:** `wp-content/themes/fsu24d-social-shopping-tema-dantvi/README.md`  
+Covers archive filter/sort/search UI and single template notes.

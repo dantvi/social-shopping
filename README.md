@@ -59,6 +59,18 @@ docker compose run --rm wpcli bash -lc "
 
 Use WooCommerce → Products → Add New (need at least two products to create a collection).
 
+## 9) Configure Stripe (Test Mode)
+
+1. Go to **WooCommerce → Settings → Payments → Stripe**  
+2. Click **Manage** and enable **Test mode**  
+3. Paste your **Test Publishable key** and **Test Secret key** from the Stripe dashboard  
+4. Save changes
+
+Test card for checkout:  
+`4242 4242 4242 4242` (any future expiry date, any CVC, any postal code)
+
+When you place a test order, WooCommerce should mark it as **Processing** under **WooCommerce → Orders**.
+
 ## Test
 
 Visit `/create-collection` to submit a collection (need ≥ 2 products).
@@ -72,10 +84,23 @@ Try filters/sort/search:
 
 Open any single collection and click `Add all to cart` → you should be redirected to the cart with all simple, purchasable, in-stock products added. Unavailable/other types are skipped with a notice.
 
+### End-to-End Sanity Check
+
+1. Create a collection with ≥ 2 published products at `/create-collection`
+2. Use **Add all to cart** on the single collection page
+3. Go through checkout and pay with Stripe test card (`4242 4242 4242 4242`)
+4. Verify order appears under **WooCommerce → Orders** with status **Processing**
+
 ## Open
 - Site: http://localhost:8084
 - Admin: http://localhost:8084/wp-admin (user: daniel / pass: notSecureChangeMe)
 - phpMyAdmin: http://localhost:8085 (user: root / pass: notSecureChangeMe)
+
+## Known Limitations
+
+- Variable, grouped, and external products are skipped by "Add all to cart"
+- Only published products are saved to collections (draft/trashed are ignored)
+- A collection must always contain at least 2 valid products after validation
 
 ## Troubleshooting
 

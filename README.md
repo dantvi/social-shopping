@@ -130,3 +130,5 @@ Covers CPT/taxonomy, admin UI, shortcode, archive URL params (ccat, sort, s), an
 
 **Theme:** `wp-content/themes/fsu24d-social-shopping-tema-dantvi/README.md`  
 Covers archive filter/sort/search UI and single template notes.
+
+**GTM/GA4:** See plugin README section **"GTM → GA4 wiring"** for triggers, variables, and tag setup.

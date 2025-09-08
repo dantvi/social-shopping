@@ -82,6 +82,10 @@ Try filters/sort/search:
 - `?sort=alpha` (A–Z) / `?sort=newest` (default)
 - `?s=kit` (search in titles)
 
+You can also view all collections authored by a specific user:
+
+- `/author/{username}/?post_type=collection`
+
 Open any single collection and click `Add all to cart` → you should be redirected to the cart with all simple, purchasable, in-stock products added. Unavailable/other types are skipped with a notice.
 
 ### End-to-End Sanity Check

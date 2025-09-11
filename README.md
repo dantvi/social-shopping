@@ -73,6 +73,8 @@ When you place a test order, WooCommerce should mark it as **Processing** under 
 
 ## Test
 
+When you buy a collection, the collection's creator should automatically receive a unique 10% single-use coupon (see plugin README for details).
+
 Visit `/create-collection` to submit a collection (need ≥ 2 products).
 
 Visit `/collections` to see the archive.
@@ -94,6 +96,9 @@ Open any single collection and click `Add all to cart` → you should be redirec
 2. Use **Add all to cart** on the single collection page
 3. Go through checkout and pay with Stripe test card (`4242 4242 4242 4242`)
 4. Verify order appears under **WooCommerce → Orders** with status **Processing**
+5. Verify that a reward coupon is issued:
+   - Go to **WooCommerce → Marketing → Coupons** and confirm that a new 10% single-use coupon has been created for the collection creator.
+   - (Optional) Check the plugin README for full details on coupon behavior and email delivery.
 
 ## Open
 - Site: http://localhost:8084

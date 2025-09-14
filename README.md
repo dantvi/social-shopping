@@ -47,6 +47,10 @@ docker compose run --rm wpcli bash -lc "
 "
 ```
 
+(Optional) Configure GTM  
+Go to **Settings → Social Shopping** in WP Admin and enter your GTM container ID  
+(see plugin README for full GTM → GA4 wiring instructions).
+
 ## 7) Create the frontend page for collections
 ```bash
 docker compose run --rm wpcli bash -lc "
@@ -74,6 +78,9 @@ When you place a test order, WooCommerce should mark it as **Processing** under 
 ## Test
 
 When you buy a collection, the collection's creator should automatically receive a unique 10% single-use coupon (see plugin README for details).
+
+> **Note:** Coupon delivery relies on WordPress sending email.  
+> In a local dev environment, use a mail catcher (e.g. MailHog) or verify the coupon manually under **WooCommerce → Marketing → Coupons**.
 
 Visit `/create-collection` to submit a collection (need ≥ 2 products).
 
